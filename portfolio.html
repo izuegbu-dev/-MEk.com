@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mekwuye Babatunde Ehima | Frontend Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary: #ff0000;
+            --secondary: #000000;
+            --accent: #990000;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--secondary);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .glow-box {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .glow-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .glow-box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #990000, #ff0000);
+            background-size: 200%;
+            z-index: -1;
+            border-radius: 0.5rem;
+            opacity: 0;
+            transition: 0.5s;
+            animation: glow 2s linear infinite;
+        }
+        
+        .glow-box:hover::before {
+            opacity: 1;
+            filter: blur(5px);
+        }
+        
+        @keyframes glow {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: 400% 0;
+            }
+        }
+        
+        .section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff0000, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: scale(1.05) rotateY(10deg);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        .admin-login {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dashboard-card {
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 2rem;
+            background: var(--primary);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-black">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black bg-opacity-90 border-b border-red-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-white font-bold text-xl gradient-text">MEK</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="glow-box px-3 py-2 rounded-md text-sm font-medium text-white bg-red-900 bg-opacity-30">Home</a>
+                        <a href="#about" class="glow-box px-3 py-2 rounded-md text-sm font-medium text-white bg-red-900 bg-opacity-30">About</a>
+                        <a href="#skills" class="glow-box px-3 py-2 rounded-md text-sm font-medium text-white bg-red-900 bg-opacity-30">Skills</a>
+                        <a href="#projects" class="glow-box px-3 py-2 rounded-md text-sm font-medium text-white bg-red-900 bg-opacity-30">Projects</a>
+                        <a href="#contact" class="glow-box px-3 py-2 rounded-md text-sm font-medium text-white bg-red-900 bg-opacity-30">Contact</a>
+                        <button onclick="openAdminLogin()" class="glow-box px-3 py-2 rounded-md text-sm font-medium text-white bg-red-900 bg-opacity-30">Admin</button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-white hover:text-red-500 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden fixed inset-0 bg-black bg-opacity-95 z-40 pt-20 px-4">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">Home</a>
+                <a href="#about" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">About</a>
+                <a href="#skills" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">Skills</a>
+                <a href="#projects" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">Projects</a>
+                <a href="#contact" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">Contact</a>
+                <button onclick="openAdminLogin()" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">Admin</button>
+                <button onclick="toggleMobileMenu()" class="glow-box px-3 py-4 rounded-md text-lg font-medium text-white bg-red-900 bg-opacity-30">Close</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="section min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <div class="absolute inset-0 bg-gradient-to-r from-black to-red-900 opacity-20"></div>
+        <div class="absolute inset-0">
+            <div class="absolute top-0 left-0 w-32 h-32 bg-red-600 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-red-800 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                <span id="typed-name" class="gradient-text"></span>
+                <span class="typing-cursor"></span>
+            </h1>
+            <h2 class="text-2xl md:text-4xl font-semibold mb-8">
+                <span id="typed-title"></span>
+                <span class="typing-cursor"></span>
+            </h2>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8">
+                <span id="typed-desc"></span>
+                <span class="typing-cursor"></span>
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#projects" class="glow-box px-6 py-3 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                    View My Work
+                </a>
+                <a href="#contact" class="glow-box px-6 py-3 rounded-md text-sm font-medium text-white bg-black hover:bg-gray-900 border border-red-900 transition duration-300">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section py-20 bg-black bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span id="typed-about-title"></span>
+                    <span class="typing-cursor"></span>
+                </h2>
+                <div class="w-20 h-1 bg-red-600 mx-auto"></div>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <div class="w-full h-full border-4 border-red-900 absolute -top-4 -left-4 z-0"></div>
+                        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Mekwuye Babatunde Ehima" 
+                             class="relative z-10 w-full h-auto rounded-lg shadow-2xl">
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-6">
+                        <span id="typed-about-subtitle"></span>
+                        <span class="typing-cursor"></span>
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                        <span id="typed-about-p1"></span>
+                        <span class="typing-cursor"></span>
+                    </p>
+                    <p class="text-gray-300 mb-6">
+                        <span id="typed-about-p2"></span>
+                        <span class="typing-cursor"></span>
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center">
+                            <span class="text-red-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                            <span class="text-gray-300">Frontend Development</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-red-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                            <span class="text-gray-300">Responsive Design</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-red-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                            <span class="text-gray-300">UI/UX Principles</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-red-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                            <span class="text-gray-300">Performance Optimization</span>
+                        </div>
+                    </div>
+                    <a href="#" class="glow-box inline-flex items-center px-6 py-3 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                        Download CV <i class="fas fa-download ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section py-20 bg-black bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span id="typed-skills-title"></span>
+                    <span class="typing-cursor"></span>
+                </h2>
+                <div class="w-20 h-1 bg-red-600 mx-auto"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">HTML5</h3>
+                    <p class="text-gray-300">Semantic markup and modern structure</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">CSS3</h3>
+                    <p class="text-gray-300">Styling and animations</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">JavaScript</h3>
+                    <p class="text-gray-300">Interactive functionality</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fab fa-vuejs"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Vue.js</h3>
+                    <p class="text-gray-300">Reactive frameworks</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Tailwind CSS</h3>
+                    <p class="text-gray-300">Utility-first CSS</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Git</h3>
+                    <p class="text-gray-300">Version control</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Responsive</h3>
+                    <p class="text-gray-300">Mobile-first design</p>
+                </div>
+                <div class="glow-box p-6 rounded-lg bg-gray-900 hover:bg-gray-800 transition duration-300 text-center">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Performance</h3>
+                    <p class="text-gray-300">Optimized solutions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section py-20 bg-black bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span id="typed-projects-title"></span>
+                    <span class="typing-cursor"></span>
+                </h2>
+                <div class="w-20 h-1 bg-red-600 mx-auto"></div>
+                <p class="text-lg text-gray-300 mt-4 max-w-2xl mx-auto">
+                    <span id="typed-projects-desc"></span>
+                    <span class="typing-cursor"></span>
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-container">
+                <!-- Projects will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section py-20 bg-black bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span id="typed-contact-title"></span>
+                    <span class="typing-cursor"></span>
+                </h2>
+                <div class="w-20 h-1 bg-red-600 mx-auto"></div>
+                <p class="text-lg text-gray-300 mt-4 max-w-2xl mx-auto">
+                    <span id="typed-contact-desc"></span>
+                    <span class="typing-cursor"></span>
+                </p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <div class="glow-box p-8 rounded-lg bg-gray-900">
+                        <h3 class="text-2xl font-bold mb-6">Get In Touch</h3>
+                        <form id="contactForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                            </div>
+                            <button type="submit" class="glow-box w-full px-6 py-3 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="glow-box p-8 rounded-lg bg-gray-900 h-full">
+                        <h3 class="text-2xl font-bold mb-6">Contact Info</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="text-red-500 text-xl mr-4 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold">Location</h4>
+                                    <p class="text-gray-300">Lagos, Nigeria</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-red-500 text-xl mr-4 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold">Email</h4>
+                                    <p class="text-gray-300">ehimamekwuye6@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-red-500 text-xl mr-4 mt-1">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold">Phone</h4>
+                                    <p class="text-gray-300">+234 903 027 2504</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-red-500 text-xl mr-4 mt-1">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold">LinkedIn</h4>
+                                    <p class="text-gray-300">linkedin.com/in/mekwuyeehima</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-red-500 text-xl mr-4 mt-1">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold">GitHub</h4>
+                                    <p class="text-gray-300">github.com/ehimare419</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold mb-4">Follow Me</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="glow-box w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-red-900 transition duration-300">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="glow-box w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-red-900 transition duration-300">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="glow-box w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-red-900 transition duration-300">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="glow-box w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-white hover:bg-red-900 transition duration-300">
+                                    <i class="fab fa-dribbble"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-black border-t border-red-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-white font-bold text-xl gradient-text">MEK</span>
+                </div>
+                <div class="text-gray-400 text-sm">
+                    &copy; 2023 Mekwuye Babatunde Ehima. All rights reserved.
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <a href="#home" class="glow-box px-4 py-2 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                        Back to Top <i class="fas fa-arrow-up ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden flex items-center justify-center admin-login">
+        <div class="glow-box bg-gray-900 rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-white">Admin Dashboard Login</h2>
+                <p class="text-gray-400 mt-2">Enter password to access admin panel</p>
+            </div>
+            <form id="adminLoginForm">
+                <div class="mb-6">
+                    <label for="adminPassword" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                    <input type="password" id="adminPassword" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                <div class="flex justify-between items-center">
+                    <button type="button" onclick="closeAdminLogin()" class="px-4 py-2 rounded-md text-sm font-medium text-white bg-gray-700 hover:bg-gray-600 transition duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="glow-box px-6 py-2 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="fixed inset-0 z-50 hidden bg-gray-900 overflow-y-auto">
+        <div class="min-h-screen">
+            <!-- Admin Header -->
+            <header class="bg-black border-b border-red-900">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between h-16">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <span class="text-white font-bold text-xl gradient-text">MEK ADMIN</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button onclick="logoutAdmin()" class="glow-box px-4 py-2 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                                Logout <i class="fas fa-sign-out-alt ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Admin Content -->
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-white">Admin Dashboard</h1>
+                    <p class="text-gray-400">Manage your portfolio projects</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="dashboard-card p-6 rounded-lg bg-gray-800 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Total Projects</h3>
+                        <p class="text-3xl font-bold text-red-500" id="totalProjects">0</p>
+                    </div>
+                    <div class="dashboard-card p-6 rounded-lg bg-gray-800 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Last Added</h3>
+                        <p class="text-xl text-gray-300" id="lastAdded">None</p>
+                    </div>
+                    <div class="dashboard-card p-6 rounded-lg bg-gray-800 border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Actions</h3>
+                        <button onclick="showAddProjectModal()" class="glow-box px-4 py-2 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                            Add Project
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-gray-900">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Title</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Category</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gray-800 divide-y divide-gray-700" id="adminProjectsTable">
+                                <!-- Projects will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="addProjectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-80">
+        <div class="glow-box bg-gray-900 rounded-lg p-8 max-w-2xl w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-white">Add New Project</h2>
+                <button onclick="closeAddProjectModal()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addProjectForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="projectTitle" class="block text-sm font-medium text-gray-300 mb-2">Title</label>
+                        <input type="text" id="projectTitle" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                    </div>
+                    <div>
+                        <label for="projectCategory" class="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                        <select id="projectCategory" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                            <option value="Web Development">Web Development</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Mobile App">Mobile App</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="projectDescription" class="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                    <textarea id="projectDescription" rows="3" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
+                </div>
+                <div>
+                    <label for="projectImage" class="block text-sm font-medium text-gray-300 mb-2">Image URL</label>
+                    <input type="text" id="projectImage" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                <div>
+                    <label for="projectLink" class="block text-sm font-medium text-gray-300 mb-2">Project URL</label>
+                    <input type="text" id="projectLink" class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="closeAddProjectModal()" class="px-4 py-2 rounded-md text-sm font-medium text-white bg-gray-700 hover:bg-gray-600 transition duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="glow-box px-6 py-2 rounded-md text-sm font-medium text-white bg-red-900 hover:bg-red-800 transition duration-300">
+                        Add Project
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Typed.js for all typing effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero section typing
+            new Typed('#typed-name', {
+                strings: ['Mekwuye Babatunde Ehima'],
+                typeSpeed: 50,
+                showCursor: false
+            });
+            
+            new Typed('#typed-title', {
+                strings: ['Frontend Web Developer'],
+                typeSpeed: 50,
+                startDelay: 1500,
+                showCursor: false
+            });
+            
+            new Typed('#typed-desc', {
+                strings: ['Creating modern, responsive and interactive web experiences with JavaScript, Tailwind CSS and Vue.js'],
+                typeSpeed: 30,
+                startDelay: 3000,
+                showCursor: false
+            });
+            
+            // About section typing
+            new Typed('#typed-about-title', {
+                strings: ['About Me'],
+                typeSpeed: 50,
+                showCursor: false
+            });
+            
+            new Typed('#typed-about-subtitle', {
+                strings: ['Professional Frontend Developer'],
+                typeSpeed: 50,
+                startDelay: 800,
+                showCursor: false
+            });
+            
+            new Typed('#typed-about-p1', {
+                strings: ['I am a passionate frontend developer with expertise in creating modern web applications. With a strong foundation in JavaScript, I specialize in building responsive and interactive user interfaces that deliver exceptional user experiences.'],
+                typeSpeed: 10,
+                startDelay: 1800,
+                showCursor: false
+            });
+            
+            new Typed('#typed-about-p2', {
+                strings: ['My approach combines technical skills with creative problem-solving to deliver high-quality solutions. I stay updated with the latest technologies and best practices to ensure my work meets current industry standards.'],
+                typeSpeed: 10,
+                startDelay: 10000,
+                showCursor: false
+            });
+            
+            // Skills section typing
+            new Typed('#typed-skills-title', {
+                strings: ['My Skills'],
+                typeSpeed: 50,
+                showCursor: false
+            });
+            
+            // Projects section typing
+            new Typed('#typed-projects-title', {
+                strings: ['My Projects'],
+                typeSpeed: 50,
+                showCursor: false
+            });
+            
+            new Typed('#typed-projects-desc', {
+                strings: ['Here are some of my recent projects. Each project showcases different aspects of my skills and expertise in frontend development.'],
+                typeSpeed: 30,
+                startDelay: 800,
+                showCursor: false
+            });
+            
+            // Contact section typing
+            new Typed('#typed-contact-title', {
+                strings: ['Get In Touch'],
+                typeSpeed: 50,
+                showCursor: false
+            });
+            
+            new Typed('#typed-contact-desc', {
+                strings: ['Have a project in mind or want to discuss potential opportunities? Feel free to reach out through the contact form or any of my social media channels.'],
+                typeSpeed: 30,
+                startDelay: 800,
+                showCursor: false
+            });
+            
+            // Intersection Observer for section animations
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Load sample projects
+            loadProjects();
+        });
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('open');
+        }
+        
+        // Admin login functions
+        function openAdminLogin() {
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+            document.getElementById('adminLoginModal').classList.add('flex');
+            toggleMobileMenu(); // Close mobile menu if open
+        }
+        
+        function closeAdminLogin() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+            document.getElementById('adminLoginModal').classList.remove('flex');
+        }
+        
+        // Admin dashboard functions
+        function logoutAdmin() {
+            document.getElementById('adminDashboard').classList.add('hidden');
+        }
+        
+        function showAddProjectModal() {
+            document.getElementById('addProjectModal').classList.remove('hidden');
+            document.getElementById('addProjectModal').classList.add('flex');
+        }
+        
+        function closeAddProjectModal() {
+            document.getElementById('addProjectModal').classList.add('hidden');
+            document.getElementById('addProjectModal').classList.remove('flex');
+        }
+        
+        // Project management
+        let projects = [
+            {
+                id: 1,
+                title: "E-commerce Website",
+                category: "Web Development",
+                description: "A fully responsive e-commerce platform built with Vue.js and Tailwind CSS.",
+                image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                link: "#",
+                date: "2023-05-15"
+            },
+            {
+                id: 2,
+                title: "Portfolio Template",
+                category: "UI/UX Design",
+                description: "A modern portfolio template designed for creative professionals.",
+                image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                link: "#",
+                date: "2023-03-22"
+            },
+            {
+                id: 3,
+                title: "Task Management App",
+                category: "Web Development",
+                description: "A productivity application for managing tasks and projects with team collaboration features.",
+                image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+                link: "#",
+                date: "2023-01-10"
+            }
+        ];
+        
+        function loadProjects() {
+            const projectsContainer = document.getElementById('projects-container');
+            projectsContainer.innerHTML = '';
+            
+            projects.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'project-card glow-box rounded-lg overflow-hidden bg-gray-900 border border-gray-800';
+                projectElement.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-white">${project.title}</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-red-900 text-white">${project.category}</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">${project.description}</p>
+                        <div class="flex justify-between items-center">
+                            <a href="${project.link}" target="_blank" class="text-sm font-medium text-red-500 hover:text-red-400 transition duration-300">
+                                View Project <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                            <span class="text-xs text-gray-500">${project.date}</span>
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(projectElement);
+            });
+            
+            // Also load projects in admin dashboard if open
+            if (!document.getElementById('adminDashboard').classList.contains('hidden')) {
+                loadAdminProjects();
+            }
+        }
+        
+        function loadAdminProjects() {
+            const adminProjectsTable = document.getElementById('adminProjectsTable');
+            adminProjectsTable.innerHTML = '';
+            
+            projects.forEach(project => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                                <img class="h-10 w-10 rounded-full" src="${project.image}" alt="${project.title}">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-white">${project.title}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-300">${project.category}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-300">${project.date}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                        <button onclick="editProject(${project.id})" class="text-red-500 hover:text-red-400 mr-3">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteProject(${project.id})" class="text-red-500 hover:text-red-400">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                adminProjectsTable.appendChild(row);
+            });
+            
+            // Update stats
+            document.getElementById('totalProjects').textContent = projects.length;
+            if (projects.length > 0) {
+                document.getElementById('lastAdded').textContent = projects[projects.length - 1].title;
+            }
+        }
+        
+        function addProject(event) {
+            event.preventDefault();
+            
+            const newProject = {
+                id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
+                title: document.getElementById('projectTitle').value,
+                category: document.getElementById('projectCategory').value,
+                description: document.getElementById('projectDescription').value,
+                image: document.getElementById('projectImage').value,
+                link: document.getElementById('projectLink').value,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            projects.push(newProject);
+            loadProjects();
+            closeAddProjectModal();
+            
+            // Reset form
+            document.getElementById('addProjectForm').reset();
+        }
+        
+        function editProject(id) {
+            const project = projects.find(p => p.id === id);
+            if (project) {
+                // In a real app, you would populate a form with the project data
+                alert(`Editing project: ${project.title}`);
+            }
+        }
+        
+        function deleteProject(id) {
+            if (confirm('Are you sure you want to delete this project?')) {
+                projects = projects.filter(p => p.id !== id);
+                loadProjects();
+            }
+        }
+        
+        // Form submissions
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === '419000') {
+                document.getElementById('adminLoginModal').classList.add('hidden');
+                document.getElementById('adminLoginModal').classList.remove('flex');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadAdminProjects();
+            } else {
+                alert('Incorrect password!');
+            }
+        });
+        
+        document.getElementById('addProjectForm').addEventListener('submit', addProject);
+        
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
